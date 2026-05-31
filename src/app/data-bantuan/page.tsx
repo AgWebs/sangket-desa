@@ -128,7 +128,7 @@ export default function DataBantuanListPage() {
             value={pageSize?.toString()} 
             onValueChange={(val) => {
             setPageSize(Number(val)); 
-            setCurrent(1); 
+            setPage(1); 
             }}
         >
             <SelectTrigger className="w-[70px] h-9 text-sm">
@@ -150,8 +150,8 @@ export default function DataBantuanListPage() {
             <Button
               key={k}
               variant={filterSumber === k ? "default" : "outline"}
-              size="md"
-              className="px-3"
+              size="sm"
+              className="px-3 h-9"
               onClick={() => { setFilterSumber(k); setPage(1); }}
             >
               {k}
