@@ -238,7 +238,7 @@ export default function FasilitasPublikEditPage() {
             <div className="rounded-lg overflow-hidden border h-72">
               <MapPicker
                 value={lat && lng ? { lat, lng } : undefined}
-                onChange={handleMapChange}
+                onChange={(lat, lng) => handleMapChange({ lat, lng })}
               />
             </div>
             {(lat && lng) && (
