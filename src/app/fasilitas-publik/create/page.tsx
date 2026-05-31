@@ -43,7 +43,7 @@ const DUSUN_OPTIONS = ["Dusun Kaje", "Dusun Tengah", "Dusun Kelod"];
 // ─── Halaman Create ───────────────────────────────────────────────────────────
 export default function FasilitasPublikCreatePage() {
   const { list } = useNavigation();
-  const { mutate: createFasilitas, isLoading } = useCreate();
+  const { mutate: createFasilitas, isLoading: loading } = useCreate();
 
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
   const [fotoFile, setFotoFile] = useState<File | null>(null);
