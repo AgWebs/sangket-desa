@@ -158,15 +158,15 @@ export default function EditAnggotaKeluargaPage() {
   const kkId = searchParams.get("kk_id") ?? "";
 
   // Info KK untuk header
-  const { query } = useOne({
+  const { query: kkQuery } = useOne({
     resource: "kepala-keluarga",
     id: kkId,
     queryOptions: { enabled: !!kkId },
   });
   
-  // Ekstrak data dari dalam objek query
-  const kkNama = (query?.data?.data as any)?.nama_lengkap;
-  const kkNoKK = (query?.data?.data as any)?.no_kk;
+  // Ekstrak data dari dalam objek kkQuery
+  const kkNama = (kkQuery?.data?.data as any)?.nama_lengkap;
+  const kkNoKK = (kkQuery?.data?.data as any)?.no_kk;
 
   const {
     register,
