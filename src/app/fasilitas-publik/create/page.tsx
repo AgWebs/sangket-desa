@@ -43,7 +43,7 @@ const DUSUN_OPTIONS = ["Dusun Kaje", "Dusun Tengah", "Dusun Kelod"];
 // ─── Halaman Create ───────────────────────────────────────────────────────────
 export default function FasilitasPublikCreatePage() {
   const { list } = useNavigation();
-  const { mutate: createFasilitas, isLoading: loading } = useCreate();
+  const { mutate: createFasilitas, status } = useCreate();
 
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
   const [fotoFile, setFotoFile] = useState<File | null>(null);
@@ -244,9 +244,9 @@ export default function FasilitasPublikCreatePage() {
           <Button type="button" variant="outline" onClick={() => list("fasilitas-publik")}>
             Batal
           </Button>
-          <Button type="submit" disabled={isLoading} className="gap-2">
+          <Button type="submit" disabled={status === "pending"} className="gap-2">
             <Save className="h-4 w-4" />
-            {isLoading ? "Menyimpan..." : "Simpan Fasilitas"}
+            {status === "pending" ? "Menyimpan..." : "Simpan Fasilitas"}
           </Button>
         </div>
       </form>

@@ -66,7 +66,7 @@ export default function FasilitasPublikEditPage() {
   const params = useParams();
   const id = Number(params.id);
   const { list, show } = useNavigation();
-  const { mutate: updateFasilitas, isLoading: loading } = useUpdate();
+  const { mutate: updateFasilitas, status } = useUpdate();
 
   // Ambil data existing (ganti dengan useOne setelah backend siap)
   const existing = DUMMY_FASILITAS.find((f) => f.id === id);
@@ -256,9 +256,9 @@ export default function FasilitasPublikEditPage() {
         {/* ── Tombol ──────────────────────────────────────────────────────────── */}
         <div className="flex gap-3 justify-end">
           <Button type="button" variant="outline" onClick={() => show("fasilitas-publik", id)}>Batal</Button>
-          <Button type="submit" disabled={isLoading} className="gap-2">
+          <Button type="submit" disabled={status === "pending"} className="gap-2">
             <Save className="h-4 w-4" />
-            {isLoading ? "Menyimpan..." : "Simpan Perubahan"}
+            {status === "pending" ? "Menyimpan..." : "Simpan Perubahan"}
           </Button>
         </div>
       </form>
