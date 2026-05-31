@@ -223,7 +223,7 @@ export default function FasilitasPublikCreatePage() {
             </p>
             <div className="rounded-lg overflow-hidden border h-72">
               <MapPicker
-                value={lat && lng ? { lat, lng } : undefined}
+                
                 onChange={(lat, lng) => handleMapChange({ lat, lng })}
               />
             </div>
