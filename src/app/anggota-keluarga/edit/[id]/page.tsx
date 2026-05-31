@@ -174,7 +174,7 @@ export default function EditAnggotaKeluargaPage() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-    refineCore: { onFinish, queryResult },
+    refineCore: { onFinish, query },
   } = useForm<any, any, AnggotaFormValues>({
     resolver: zodResolver(anggotaSchema),
     refineCoreProps: {
@@ -185,8 +185,8 @@ export default function EditAnggotaKeluargaPage() {
     },
   });
 
-  const isLoading = queryResult?.isLoading;
-  const queryData = queryResult?.data?.data as AnggotaFormValues | undefined;
+  const isLoading = query?.isLoading;
+  const queryData = query?.data?.data as AnggotaFormValues | undefined;
 
   // Sync data API → form
   useEffect(() => {
