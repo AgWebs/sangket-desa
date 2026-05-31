@@ -110,7 +110,7 @@ const kkSchema = z.object({
   status_penduduk: z.enum(["Permanen", "Non-Permanen"], {
     required_error: "Pilih status penduduk",
   }),
-  bantuan: z.array(z.string()).default([]),
+  bantuan: z.array(z.string()).optional(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
 });
