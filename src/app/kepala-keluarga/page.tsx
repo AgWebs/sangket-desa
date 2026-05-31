@@ -145,7 +145,15 @@ export default function KepalaKeluargaListPage() {
   const [filterBantuan, setFilterBantuan] = useState("all");
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
-  const { tableQuery, pageIndex, setPageIndex, pageCount, pageSize, setPageSize } = useTable({
+  const { 
+  tableQuery, 
+  table: { 
+    getState, 
+    setPageIndex, 
+    getPageCount, 
+    setPageSize 
+  } 
+} = useTable({
     resource: "kepala-keluarga",
     filters: {
       permanent: [
@@ -165,14 +173,14 @@ export default function KepalaKeluargaListPage() {
           : []),
       ],
     },
-  });
+  }) as any;
 
   const columns = useMemo<ColumnDef<KepalaKeluarga>[]>(() => [
     {
       header: "No",
       id: "no",
       cell: ({ row }) => {
-        return ((pageIndex ?? 1) - 1) * (pageSize ?? 10) + row.index + 1;
+        return ((getState().pageIndex ?? 1) - 1) * (getState().pageSize ?? 10) + row.index + 1;
       },
     },
     {
@@ -287,8 +295,8 @@ export default function KepalaKeluargaListPage() {
   const nonPermanen = 1;
   const penerimaBantuan = 3;
   const total = DUMMY_DATA.length;
-  const from = ((pageIndex ?? 1) - 1) * (pageSize ?? 10) + 1;
-  const to = Math.min((pageIndex ?? 1) * (pageSize ?? 10), total);
+  const from = ((getState().pageIndex ?? 1) - 1) * (getState().pageSize ?? 10) + 1;
+  const to = Math.min((getState().pageIndex ?? 1) * (getState().pageSize ?? 10), total);
 
   const handleConfirmDelete = () => {
     if (deleteId !== null) {
@@ -369,7 +377,7 @@ export default function KepalaKeluargaListPage() {
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground hidden md:inline-block">Tampilkan:</span>
           <Select
-            value={pageSize?.toString()} 
+            value={getState().pageSize?.toString()} 
             onValueChange={(val) => {
               setPageSize(Number(val)); 
               setPageIndex(1); 
