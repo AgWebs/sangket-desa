@@ -1,0 +1,242 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useUpdate, useOne, useNavigation } from "@refinedev/core";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useParams } from "next/navigation";
+import dynamic from "next/dynamic";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Save, MapPin, Upload, X } from "lucide-react";
+
+// ─── Dummy data (ganti useOne setelah backend siap) ───────────────────────────
+import { DUMMY_FASILITAS, type FasilitasPublik } from "../../page";
+
+const MapPicker = dynamic(() => import("@/components/map-picker"), { ssr: false });
+
+const schema = z.object({
+  nama_fasilitas: z.string().min(3, "Nama fasilitas minimal 3 karakter"),
+  jenis_kategori: z.string().min(1, "Pilih jenis/kategori fasilitas"),
+  lokasi_dusun: z.string().min(1, "Pilih lokasi dusun"),
+  kondisi: z.enum(["Baik", "Rusak Ringan", "Rusak Berat"]),
+  keterangan: z.string().optional(),
+  latitude: z.number({ required_error: "Pilih lokasi pada peta" }),
+  longitude: z.number({ required_error: "Pilih lokasi pada peta" }),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+const JENIS_OPTIONS = ["Balai Pertemuan", "Tempat Ibadah", "Olahraga", "Kesehatan", "Infrastruktur", "Pendidikan", "Lainnya"];
+const DUSUN_OPTIONS = ["Dusun Kaje", "Dusun Tengah", "Dusun Kelod"];
+
+export default function FasilitasPublikEditPage() {
+  const params = useParams();
+  const id = Number(params.id);
+  const { list, show } = useNavigation();
+  const { mutate: updateFasilitas, isLoading } = useUpdate();
+
+  // Ambil data existing (ganti dengan useOne setelah backend siap)
+  const existing = DUMMY_FASILITAS.find((f) => f.id === id);
+
+  const [fotoPreview, setFotoPreview] = useState<string | null>(existing?.foto_url ?? null);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+  });
+
+  useEffect(() => {
+    if (existing) {
+      reset({
+        nama_fasilitas: existing.nama_fasilitas,
+        jenis_kategori: existing.jenis_kategori,
+        lokasi_dusun: existing.lokasi_dusun,
+        kondisi: existing.kondisi,
+        keterangan: existing.keterangan,
+        latitude: existing.latitude,
+        longitude: existing.longitude,
+      });
+    }
+  }, [existing, reset]);
+
+  const lat = watch("latitude");
+  const lng = watch("longitude");
+
+  const handleMapChange = (coords: { lat: number; lng: number }) => {
+    setValue("latitude", coords.lat, { shouldValidate: true });
+    setValue("longitude", coords.lng, { shouldValidate: true });
+  };
+
+  const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setFotoPreview(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const onSubmit = (data: FormValues) => {
+    updateFasilitas(
+      { resource: "fasilitas-publik", id, values: { ...data, foto_url: fotoPreview } },
+      { onSuccess: () => show("fasilitas-publik", id) }
+    );
+  };
+
+  if (!existing) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        Data fasilitas tidak ditemukan.
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-7xl mx-auto py-6 px-4 md:px-6 space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="icon" onClick={() => show("fasilitas-publik", id)}>
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Edit Fasilitas Publik</h1>
+          <p className="text-muted-foreground text-sm">{existing.nama_fasilitas}</p>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* ── Informasi Dasar ─────────────────────────────────────────────────── */}
+        <Card>
+          <CardHeader><CardTitle className="text-base">Informasi Fasilitas</CardTitle></CardHeader>
+          <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="sm:col-span-2 space-y-1.5">
+              <Label className="mb-2" htmlFor="nama_fasilitas">Nama Fasilitas <span className="text-red-500">*</span></Label>
+              <Input {...register("nama_fasilitas")} />
+              {errors.nama_fasilitas && <p className="text-xs text-red-500">{errors.nama_fasilitas.message}</p>}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="mb-2" htmlFor="jenis_kategori">
+                Jenis/Kategori <span className="text-red-500">*</span>
+              </Label>
+              <Select value={watch("jenis_kategori")} onValueChange={(v) => setValue("jenis_kategori", v, { shouldValidate: true })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {JENIS_OPTIONS.map((j) => <SelectItem key={j} value={j}>{j}</SelectItem>)}
+                </SelectContent>
+              </Select>
+              {errors.jenis_kategori && <p className="text-xs text-red-500">{errors.jenis_kategori.message}</p>}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="mb-2" htmlFor="lokasi_dusun">
+                Lokasi (Dusun/Banjar) <span className="text-red-500">*</span>
+              </Label>
+              <Select value={watch("lokasi_dusun")} onValueChange={(v) => setValue("lokasi_dusun", v, { shouldValidate: true })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {DUSUN_OPTIONS.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+                </SelectContent>
+              </Select>
+              {errors.lokasi_dusun && <p className="text-xs text-red-500">{errors.lokasi_dusun.message}</p>}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="mb-2" htmlFor="kondisi">
+                Kondisi Fasilitas <span className="text-red-500">*</span>
+              </Label>
+              <Select value={watch("kondisi")} onValueChange={(v) => setValue("kondisi", v as FormValues["kondisi"], { shouldValidate: true })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Baik">Baik</SelectItem>
+                  <SelectItem value="Rusak Ringan">Rusak Ringan</SelectItem>
+                  <SelectItem value="Rusak Berat">Rusak Berat</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="sm:col-span-2 space-y-1.5">
+              <Label className="mb-2" htmlFor="keterangan">
+                Keterangan / Deskripsi
+              </Label>
+              <Textarea className="resize-none" rows={3} {...register("keterangan")} />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* ── Foto ────────────────────────────────────────────────────────────── */}
+        <Card>
+          <CardHeader><CardTitle className="text-base">Foto Fasilitas</CardTitle></CardHeader>
+          <CardContent>
+            {fotoPreview ? (
+              <div className="relative w-full max-w-md">
+                <img src={fotoPreview} alt="Preview" className="rounded-lg w-full object-cover max-h-60 border" />
+                <Button type="button" size="icon" variant="destructive" className="absolute top-2 right-2 h-7 w-7"
+                  onClick={() => setFotoPreview(null)}>
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <label className="flex flex-col items-center justify-center w-full max-w-md h-40 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/40 transition-colors">
+                <Upload className="h-8 w-8 text-muted-foreground mb-2" />
+                <span className="text-sm text-muted-foreground">Klik untuk upload foto baru</span>
+                <input type="file" accept="image/*" className="hidden" onChange={handleFotoChange} />
+              </label>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* ── Lokasi Peta ─────────────────────────────────────────────────────── */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              <MapPin className="h-4 w-4" /> Koordinat Lokasi
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">Klik pada peta untuk memperbarui koordinat fasilitas.</p>
+            <div className="rounded-lg overflow-hidden border h-72">
+              <MapPicker
+                value={lat && lng ? { lat, lng } : undefined}
+                onChange={handleMapChange}
+              />
+            </div>
+            {(lat && lng) && (
+              <div className="flex gap-4 text-sm text-muted-foreground">
+                <span>Lat: <span className="font-mono text-foreground">{lat.toFixed(6)}</span></span>
+                <span>Lng: <span className="font-mono text-foreground">{lng.toFixed(6)}</span></span>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* ── Tombol ──────────────────────────────────────────────────────────── */}
+        <div className="flex gap-3 justify-end">
+          <Button type="button" variant="outline" onClick={() => show("fasilitas-publik", id)}>Batal</Button>
+          <Button type="submit" disabled={isLoading} className="gap-2">
+            <Save className="h-4 w-4" />
+            {isLoading ? "Menyimpan..." : "Simpan Perubahan"}
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
