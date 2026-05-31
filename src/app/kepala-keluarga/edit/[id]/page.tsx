@@ -187,7 +187,7 @@ export default function EditKepalaKeluargaPage() {
     watch,
     reset,
     formState: { errors, isSubmitting },
-    refineCore: { onFinish, queryResult },
+    refineCore: { onFinish, query },
   } = useForm<any, any, KKFormValues>({
     resolver: zodResolver(kkSchema),
     refineCoreProps: {
@@ -202,7 +202,7 @@ export default function EditKepalaKeluargaPage() {
 
   // Saat data dari API masuk, reset form agar semua field ter-populate
   // Refine sebenarnya auto-populate, tapi ini failsafe untuk field array (bantuan)
-  const queryData = queryResult?.data?.data as KKFormValues | undefined;
+  const queryData = query.data?.data as KKFormValues | undefined;
   useEffect(() => {
     if (queryData) {
       reset({
@@ -215,7 +215,7 @@ export default function EditKepalaKeluargaPage() {
     }
   }, [queryData, reset]);
 
-  const isLoading = queryResult?.isLoading;
+  const isLoading = query.isLoading;
   const bantuanValue = watch("bantuan") ?? [];
   const lat = watch("latitude");
   const lng = watch("longitude");
