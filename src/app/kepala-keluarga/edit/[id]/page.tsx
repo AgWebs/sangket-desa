@@ -612,7 +612,7 @@ export default function EditKepalaKeluargaPage() {
                 render={({ field }) => (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {BANTUAN_LIST.map((item) => {
-                      const checked = field.value.includes(item.id);
+                      const checked = field.value?.includes(item.id) ?? false;
                       return (
                         <label
                           key={item.id}
@@ -626,10 +626,10 @@ export default function EditKepalaKeluargaPage() {
                             checked={checked}
                             onCheckedChange={(c) => {
                               if (c) {
-                                field.onChange([...field.value, item.id]);
+                                field.onChange([...(field.value || []), item.id]);
                               } else {
                                 field.onChange(
-                                  field.value.filter((v) => v !== item.id)
+                                  (field.value || []).filter((v) => v !== item.id)
                                 );
                               }
                             }}
