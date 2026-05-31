@@ -158,13 +158,15 @@ export default function EditAnggotaKeluargaPage() {
   const kkId = searchParams.get("kk_id") ?? "";
 
   // Info KK untuk header
-  const { data: kkData } = useOne({
+  const { query } = useOne({
     resource: "kepala-keluarga",
     id: kkId,
     queryOptions: { enabled: !!kkId },
   });
-  const kkNama = (kkData?.data as any)?.nama_lengkap;
-  const kkNoKK = (kkData?.data as any)?.no_kk;
+  
+  // Ekstrak data dari dalam objek query
+  const kkNama = (query?.data?.data as any)?.nama_lengkap;
+  const kkNoKK = (query?.data?.data as any)?.no_kk;
 
   const {
     register,
@@ -173,7 +175,7 @@ export default function EditAnggotaKeluargaPage() {
     reset,
     formState: { errors, isSubmitting },
     refineCore: { onFinish, queryResult },
-  } = useForm<AnggotaFormValues>({
+  } = useForm<any, any, AnggotaFormValues>({
     resolver: zodResolver(anggotaSchema),
     refineCoreProps: {
       resource: "anggota-keluarga",
