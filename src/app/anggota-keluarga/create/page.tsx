@@ -135,13 +135,16 @@ export default function CreateAnggotaKeluargaPage() {
   const kkId = searchParams.get("kk_id") ?? "";
 
   // Fetch info KK untuk ditampilkan di breadcrumb/header
-  const { data: kkData } = useOne({
+  // Fetch info KK untuk ditampilkan di breadcrumb/header
+  const { query } = useOne({
     resource: "kepala-keluarga",
     id: kkId,
     queryOptions: { enabled: !!kkId },
   });
-  const kkNama = (kkData?.data as any)?.nama_lengkap;
-  const kkNoKK = (kkData?.data as any)?.no_kk;
+  
+  // Ekstrak data dari dalam objek query
+  const kkNama = (query?.data?.data as any)?.nama_lengkap;
+  const kkNoKK = (query?.data?.data as any)?.no_kk;
 
   const {
     register,

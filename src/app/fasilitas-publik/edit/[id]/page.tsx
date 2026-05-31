@@ -22,8 +22,28 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Save, MapPin, Upload, X } from "lucide-react";
 
-// ─── Dummy data (ganti useOne setelah backend siap) ───────────────────────────
-import { DUMMY_FASILITAS, type FasilitasPublik } from "../../page";
+type FasilitasPublik = {
+  id: number;
+  nama_fasilitas: string;
+  jenis_kategori: string;
+  lokasi_dusun: string;
+  kondisi: "Baik" | "Rusak Ringan" | "Rusak Berat";
+  keterangan: string;
+  latitude: number;
+  longitude: number;
+  foto_url?: string;
+};
+
+// ─── Data Dummy ───────────────────────────────────────────────────────────────
+const DUMMY_FASILITAS: FasilitasPublik[] = [
+  { id: 1, nama_fasilitas: "Balai Banjar Kaje", jenis_kategori: "Balai Pertemuan", lokasi_dusun: "Dusun Kaje", kondisi: "Baik", keterangan: "Kondisi sangat baik, baru direnovasi 2023", latitude: -8.1120, longitude: 115.0875 },
+  { id: 2, nama_fasilitas: "Pura Desa Sangket", jenis_kategori: "Tempat Ibadah", lokasi_dusun: "Dusun Tengah", kondisi: "Baik", keterangan: "Pura utama desa, terawat dengan baik", latitude: -8.1135, longitude: 115.0892 },
+  { id: 3, nama_fasilitas: "Lapangan Voli Kelod", jenis_kategori: "Olahraga", lokasi_dusun: "Dusun Kelod", kondisi: "Rusak Ringan", keterangan: "Net perlu diganti, lantai sedikit retak", latitude: -8.1155, longitude: 115.0910 },
+  { id: 4, nama_fasilitas: "Polindes Sangket", jenis_kategori: "Kesehatan", lokasi_dusun: "Dusun Tengah", kondisi: "Baik", keterangan: "Operasional setiap hari kerja", latitude: -8.1128, longitude: 115.0885 },
+  { id: 5, nama_fasilitas: "Jembatan Tukad Kaje", jenis_kategori: "Infrastruktur", lokasi_dusun: "Dusun Kaje", kondisi: "Rusak Berat", keterangan: "Perlu perbaikan segera, retak di tiang utama", latitude: -8.1108, longitude: 115.0860 },
+  { id: 6, nama_fasilitas: "SD Negeri 1 Sangket", jenis_kategori: "Pendidikan", lokasi_dusun: "Dusun Tengah", kondisi: "Baik", keterangan: "6 ruang kelas aktif", latitude: -8.1140, longitude: 115.0900 },
+  { id: 7, nama_fasilitas: "Wantilan Kelod", jenis_kategori: "Balai Pertemuan", lokasi_dusun: "Dusun Kelod", kondisi: "Rusak Ringan", keterangan: "Atap bocor di bagian timur", latitude: -8.1162, longitude: 115.0920 },
+];
 
 const MapPicker = dynamic(() => import("@/components/map-picker"), { ssr: false });
 
