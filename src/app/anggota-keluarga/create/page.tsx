@@ -152,7 +152,7 @@ export default function CreateAnggotaKeluargaPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
     refineCore: { onFinish },
-  } = useForm<AnggotaFormValues>({
+  } = useForm<any, any, AnggotaFormValues>({
     resolver: zodResolver(anggotaSchema),
     refineCoreProps: {
       resource: "anggota-keluarga",
