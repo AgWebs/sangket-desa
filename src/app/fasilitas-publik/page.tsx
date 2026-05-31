@@ -61,7 +61,7 @@ export type FasilitasPublik = {
 };
 
 // ─── Data Dummy ───────────────────────────────────────────────────────────────
-export const DUMMY_FASILITAS: FasilitasPublik[] = [
+const DUMMY_FASILITAS: FasilitasPublik[] = [
   { id: 1, nama_fasilitas: "Balai Banjar Kaje", jenis_kategori: "Balai Pertemuan", lokasi_dusun: "Dusun Kaje", kondisi: "Baik", keterangan: "Kondisi sangat baik, baru direnovasi 2023", latitude: -8.1120, longitude: 115.0875 },
   { id: 2, nama_fasilitas: "Pura Desa Sangket", jenis_kategori: "Tempat Ibadah", lokasi_dusun: "Dusun Tengah", kondisi: "Baik", keterangan: "Pura utama desa, terawat dengan baik", latitude: -8.1135, longitude: 115.0892 },
   { id: 3, nama_fasilitas: "Lapangan Voli Kelod", jenis_kategori: "Olahraga", lokasi_dusun: "Dusun Kelod", kondisi: "Rusak Ringan", keterangan: "Net perlu diganti, lantai sedikit retak", latitude: -8.1155, longitude: 115.0910 },
