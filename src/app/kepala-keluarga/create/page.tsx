@@ -164,7 +164,7 @@ export default function CreateKepalaKeluargaPage() {
     formState: { errors, isSubmitting },
     saveButtonProps,
     refineCore: { onFinish },
-  } = useForm<KKFormValues>({
+  } = useForm<any, any, KKFormValues>({
     resolver: zodResolver(kkSchema),
     refineCoreProps: {
       resource: "kepala-keluarga",

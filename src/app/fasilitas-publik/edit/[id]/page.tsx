@@ -80,7 +80,7 @@ export default function FasilitasPublikEditPage() {
     watch,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<any, any, FormValues>({
     resolver: zodResolver(schema),
   });
 

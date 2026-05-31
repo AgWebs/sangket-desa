@@ -54,7 +54,7 @@ export default function FasilitasPublikCreatePage() {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<any, any, FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { kondisi: "Baik" },
   });

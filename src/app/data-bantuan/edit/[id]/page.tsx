@@ -99,7 +99,7 @@ export default function DataBantuanEditPage() {
     watch,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+  } = useForm<any, any, FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { aktif: true },
   });
