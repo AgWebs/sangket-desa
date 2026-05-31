@@ -150,7 +150,7 @@ export default function FasilitasPublikEditPage() {
             <div className="sm:col-span-2 space-y-1.5">
               <Label className="mb-2" htmlFor="nama_fasilitas">Nama Fasilitas <span className="text-red-500">*</span></Label>
               <Input {...register("nama_fasilitas")} />
-              {errors.nama_fasilitas && <p className="text-xs text-red-500">{errors.nama_fasilitas.message}</p>}
+              {errors.nama_fasilitas?.message && <p className="text-xs text-red-500">{String(errors.nama_fasilitas.message)}</p>}
             </div>
 
             <div className="space-y-1.5">
@@ -163,7 +163,7 @@ export default function FasilitasPublikEditPage() {
                   {JENIS_OPTIONS.map((j) => <SelectItem key={j} value={j}>{j}</SelectItem>)}
                 </SelectContent>
               </Select>
-              {errors.jenis_kategori && <p className="text-xs text-red-500">{errors.jenis_kategori.message}</p>}
+              {errors.jenis_kategori?.message && <p className="text-xs text-red-500">{String(errors.jenis_kategori.message)}</p>}
             </div>
 
             <div className="space-y-1.5">
@@ -176,7 +176,7 @@ export default function FasilitasPublikEditPage() {
                   {DUSUN_OPTIONS.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
                 </SelectContent>
               </Select>
-              {errors.lokasi_dusun && <p className="text-xs text-red-500">{errors.lokasi_dusun.message}</p>}
+              {errors.lokasi_dusun?.message && <p className="text-xs text-red-500">{String(errors.lokasi_dusun.message)}</p>}
             </div>
 
             <div className="space-y-1.5">
@@ -191,6 +191,7 @@ export default function FasilitasPublikEditPage() {
                   <SelectItem value="Rusak Berat">Rusak Berat</SelectItem>
                 </SelectContent>
               </Select>
+              {errors.kondisi?.message && <p className="text-xs text-red-500">{String(errors.kondisi.message)}</p>}
             </div>
 
             <div className="sm:col-span-2 space-y-1.5">
@@ -198,6 +199,7 @@ export default function FasilitasPublikEditPage() {
                 Keterangan / Deskripsi
               </Label>
               <Textarea className="resize-none" rows={3} {...register("keterangan")} />
+              {errors.keterangan?.message && <p className="text-xs text-red-500">{String(errors.keterangan.message)}</p>}
             </div>
           </CardContent>
         </Card>
@@ -244,6 +246,9 @@ export default function FasilitasPublikEditPage() {
                 <span>Lat: <span className="font-mono text-foreground">{lat.toFixed(6)}</span></span>
                 <span>Lng: <span className="font-mono text-foreground">{lng.toFixed(6)}</span></span>
               </div>
+            )}
+            {(errors.latitude?.message || errors.longitude?.message) && (
+              <p className="text-xs text-red-500">{String(errors.latitude?.message || errors.longitude?.message)}</p>
             )}
           </CardContent>
         </Card>

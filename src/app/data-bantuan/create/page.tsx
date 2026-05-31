@@ -146,7 +146,7 @@ export default function DataBantuanCreatePage() {
               <p className="text-xs text-muted-foreground">
                 Huruf kecil, angka, dan underscore. Digunakan sebagai identifier unik.
               </p>
-              {errors.kode && <p className="text-xs text-destructive">{errors.kode.message}</p>}
+              {errors.kode?.message && <p className="text-xs text-destructive">{String(errors.kode.message)}</p>}
             </div>
 
             {/* Nama */}
@@ -159,8 +159,8 @@ export default function DataBantuanCreatePage() {
                 placeholder="Contoh: Program Keluarga Harapan (PKH)"
                 {...register("nama_bantuan")}
               />
-              {errors.nama_bantuan && (
-                <p className="text-xs text-destructive">{errors.nama_bantuan.message}</p>
+              {errors.nama_bantuan?.message && (
+                <p className="text-xs text-destructive">{String(errors.nama_bantuan.message)}</p>
               )}
             </div>
 
@@ -189,8 +189,8 @@ export default function DataBantuanCreatePage() {
                   </button>
                 ))}
               </div>
-              {errors.sumber_dana && (
-                <p className="text-xs text-destructive">{errors.sumber_dana.message}</p>
+              {errors.sumber_dana?.message && (
+                <p className="text-xs text-destructive">{String(errors.sumber_dana.message)}</p>
               )}
             </div>
 
