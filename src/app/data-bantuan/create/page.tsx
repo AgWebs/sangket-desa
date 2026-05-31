@@ -80,7 +80,7 @@ export default function DataBantuanCreatePage() {
     setValue,
     watch,
     formState: { errors, isSubmitting },
-  }} = useForm<any, any, FormValues>({
+  } = useForm<any, any, FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { aktif: true },
   });
