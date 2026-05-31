@@ -109,6 +109,7 @@ export default function DataBantuanListPage() {
           { label: "Dana Desa", value: totalDesa, color: "bg-green-100 dark:bg-green-900/40", iconColor: "text-green-600 dark:text-green-400" },
         ].map((stat) => (
             <StatCard
+              key={stat.label}
               icon={<Gift className="w-4 h-4" />}
               label={stat.label}
               value={stat.value}

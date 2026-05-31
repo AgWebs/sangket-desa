@@ -210,13 +210,6 @@ export default function AnggotaKeluargaListPage() {
   const handleFilterStatus = (v: string) => { setFilterStatus(v); setPageIndex(0); };
   const handleFilterKK = (v: string) => { setFilterKK(v); setPageIndex(0); };
 
-  // ── Render tabel menggunakan @tanstack/react-table langsung (data lokal)
-  const { getHeaderGroups, getRowModel, setData } = (() => {
-    const [tableData] = useState(paginatedData);
-    const { createTable } = require("@tanstack/react-table");
-    return { getHeaderGroups: () => [], getRowModel: () => ({ rows: [] }), setData: () => {} };
-  })();
-
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <div className="p-6 space-y-6">
