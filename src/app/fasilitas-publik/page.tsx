@@ -75,7 +75,7 @@ const JENIS_LIST = ["Semua Jenis", "Balai Pertemuan", "Tempat Ibadah", "Olahraga
 const DUSUN_LIST = ["Semua Dusun", "Dusun Kaje", "Dusun Tengah", "Dusun Kelod"];
 
 // ─── Badge Kondisi ────────────────────────────────────────────────────────────
-export function KondisiBadge({ kondisi }: { kondisi: FasilitasPublik["kondisi"] }) {
+function KondisiBadge({ kondisi }: { kondisi: FasilitasPublik["kondisi"] }) {
   const map = {
     Baik: { cls: "bg-emerald-100 text-emerald-700 border-emerald-200", icon: <CheckCircle2 className="h-3 w-3" /> },
     "Rusak Ringan": { cls: "bg-amber-100 text-amber-700 border-amber-200", icon: <AlertTriangle className="h-3 w-3" /> },
