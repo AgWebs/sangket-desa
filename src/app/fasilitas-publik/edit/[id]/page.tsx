@@ -66,7 +66,7 @@ export default function FasilitasPublikEditPage() {
   const params = useParams();
   const id = Number(params.id);
   const { list, show } = useNavigation();
-  const { mutate: updateFasilitas, status } = useUpdate();
+  const { mutate: updateFasilitas, isLoading } = useUpdate() as any;
 
   // Ambil data existing (ganti dengan useOne setelah backend siap)
   const existing = DUMMY_FASILITAS.find((f) => f.id === id);
