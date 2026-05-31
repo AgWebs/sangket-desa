@@ -499,15 +499,15 @@ export default function KepalaKeluargaListPage() {
               variant="outline"
               size="icon"
               className="h-7 w-7"
-              onClick={() => setPageIndex((pageIndex ?? 1) - 1)}
-              disabled={(pageIndex ?? 1) === 1}
+              onClick={() => setPageIndex(getState().pagination.pageIndex - 1)}
+              disabled={getState().pagination.pageIndex === 0}
             >
               <ChevronLeft className="h-3.5 w-3.5" />
             </Button>
-            {Array.from({ length: Math.min(pageCount ?? 0, 5) }, (_, i) => (
+            {Array.from({ length: Math.min(getPageCount() ?? 0, 5) }, (_, i) => (
               <Button
                 key={i}
-                variant={pageIndex === i + 1 ? "default" : "outline"}
+                variant={getState().pagination.pageIndex === i ? "default" : "outline"}
                 size="icon"
                 className="h-7 w-7 text-xs"
                 onClick={() => setPageIndex(i + 1)}
@@ -515,16 +515,16 @@ export default function KepalaKeluargaListPage() {
                 {i + 1}
               </Button>
             ))}
-            {(pageCount ?? 0) > 5 && (
+            {(getPageCount() ?? 0) > 5 && (
               <>
                 <span className="px-1">...</span>
                 <Button
                   variant="outline"
                   size="icon"
                   className="h-7 w-7 text-xs"
-                  onClick={() => setPageIndex(pageCount ?? 1)}
+                  onClick={() => setPageIndex(getPageCount() ?? 1)}
                 >
-                  {pageCount}
+                  {getPageCount()}
                 </Button>
               </>
             )}
@@ -532,8 +532,8 @@ export default function KepalaKeluargaListPage() {
               variant="outline"
               size="icon"
               className="h-7 w-7"
-              onClick={() => setPageIndex((pageIndex ?? 1) + 1)}
-              disabled={pageIndex === pageCount}
+              onClick={() => setPageIndex((getState().pagination.pageIndex ?? 1) + 1)}
+              disabled={getState().pagination.pageIndex === getPageCount() - 1}
             >
               <ChevronRight className="h-3.5 w-3.5" />
             </Button>
