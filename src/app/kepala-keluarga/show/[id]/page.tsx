@@ -211,23 +211,6 @@ export default function ShowKepalaKeluargaPage() {
     string | number | null
   >(null);
 
-  // Fetch data KK
-//   const { queryResult } = useShow<KepalaKeluarga>({
-//     resource: "kepala-keluarga",
-//     id,
-//   });
-//   const kk = queryResult?.data?.data;
-//   const isLoading = queryResult?.isLoading;
-
-  // Fetch anggota keluarga (filter by kk_id)
-//   const { data: anggotaData, isLoading: anggotaLoading } =
-//     useList<AnggotaKeluarga>({
-//       resource: "anggota-keluarga",
-//       filters: [{ field: "kk_id", operator: "eq", value: id }],
-//       queryOptions: { enabled: !!id },
-//     });
-//   const anggotaList = anggotaData?.data ?? [];
-
 // Data Dummy Kepala Keluarga
   const DUMMY_KK_DETAIL: KepalaKeluarga[] = [
     {
@@ -246,7 +229,7 @@ export default function ShowKepalaKeluargaPage() {
       rt: "01",
       rw: "02",
       dusun: "Dusun Kaja",
-      status_penduduk: "Permanen",
+      status_penduduk: "Non-Permanen",
       bantuan: ["pkh", "blt"], 
       latitude: -8.1333, 
       longitude: 115.0833,
@@ -412,7 +395,11 @@ export default function ShowKepalaKeluargaPage() {
                   variant={
                     kk.status_penduduk === "Permanen" ? "default" : "secondary"
                   }
-                  className="text-xs"
+                  className={
+                  kk.status_penduduk === "Permanen"
+                    ? "bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                    : "bg-amber-100 text-amber-700 border-amber-200 hover:bg-amber-100"
+                }
                 >
                   {kk.status_penduduk}
                 </Badge>

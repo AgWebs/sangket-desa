@@ -214,7 +214,7 @@ export default function AnggotaKeluargaListPage() {
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Anggota Keluarga</h1>
           <p className="text-muted-foreground text-sm mt-0.5">
@@ -228,7 +228,7 @@ export default function AnggotaKeluargaListPage() {
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <StatCard
           icon={<Users className="h-5 w-5 text-blue-600" />}
           label="Total Anggota"

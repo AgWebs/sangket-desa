@@ -180,9 +180,7 @@ export default function CreateAnggotaKeluargaPage() {
           variant="ghost"
           size="icon"
           onClick={() =>
-            kkId
-              ? router.push(`/kepala-keluarga/show/${kkId}`)
-              : router.push("/kepala-keluarga")
+            router.push("/anggota-keluarga")
           }
         >
           <ArrowLeft className="h-4 w-4" />

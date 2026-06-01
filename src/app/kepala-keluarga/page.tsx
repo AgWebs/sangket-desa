@@ -21,6 +21,8 @@ import {
   Upload,
   UserCheck,
   UserX,
+  ChevronsLeft,
+  ChevronsRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -80,7 +82,7 @@ const DUMMY_DATA: KepalaKeluarga[] = [
     dusun: "Dusun Kaja",
     rt: "01",
     rw: "02",
-    status_penduduk: "permanen",
+    status_penduduk: "non_permanen",
     bantuan: [
       { id: 1, nama: "PKH" },
       { id: 2, nama: "BLT Dana Desa" },
@@ -314,15 +316,15 @@ export default function KepalaKeluargaListPage() {
 
   return (
     <div className="p-6 space-y-5">
-      <div className="flex items-center justify-between">
-       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Data kepala keluarga
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Desa Adat Sangket — total {total.toLocaleString("id-ID")} KK terdaftar
-        </p>
-      </div>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Data kepala keluarga
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Desa Adat Sangket — total {total.toLocaleString("id-ID")} KK terdaftar
+          </p>
+        </div>
         <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-9 gap-1.5"
             onClick={() => router.push("/kepala-keluarga/import")}>
@@ -494,55 +496,66 @@ export default function KepalaKeluargaListPage() {
           </TableBody>
         </Table>
 
-        {/* Pagination */}
+        {/* Paginasi */}
         <div className="flex items-center justify-between px-4 py-3 border-t text-sm text-muted-foreground">
           <span>
-            {total > 0
-              ? `Menampilkan ${from}–${to} dari ${total.toLocaleString("id-ID")} data`
-              : "Tidak ada data"}
+            Menampilkan{" "}
+            <span className="font-medium text-foreground">
+              {tableInstance.getRowModel().rows.length === 0 
+                ? 0 
+                : getState().pagination.pageIndex * getState().pagination.pageSize + 1}
+              –
+              {Math.min(
+                (getState().pagination.pageIndex + 1) * getState().pagination.pageSize,
+                total
+              )}
+            </span>{" "}
+            dari{" "}
+            <span className="font-medium text-foreground">{total.toLocaleString("id-ID")}</span>{" "}
+            data
           </span>
+
           <div className="flex items-center gap-1">
             <Button
               variant="outline"
               size="icon"
-              className="h-7 w-7"
-              onClick={() => setPageIndex(getState().pagination.pageIndex - 1)}
+              className="h-8 w-8"
+              onClick={() => setPageIndex(0)}
               disabled={getState().pagination.pageIndex === 0}
             >
-              <ChevronLeft className="h-3.5 w-3.5" />
+              <ChevronsLeft className="h-4 w-4" />
             </Button>
-            {Array.from({ length: Math.min(getPageCount() ?? 0, 5) }, (_, i) => (
-              <Button
-                key={i}
-                variant={getState().pagination.pageIndex === i ? "default" : "outline"}
-                size="icon"
-                className="h-7 w-7 text-xs"
-                onClick={() => setPageIndex(i + 1)}
-              >
-                {i + 1}
-              </Button>
-            ))}
-            {(getPageCount() ?? 0) > 5 && (
-              <>
-                <span className="px-1">...</span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-7 w-7 text-xs"
-                  onClick={() => setPageIndex(getPageCount() ?? 1)}
-                >
-                  {getPageCount()}
-                </Button>
-              </>
-            )}
             <Button
               variant="outline"
               size="icon"
-              className="h-7 w-7"
-              onClick={() => setPageIndex((getState().pagination.pageIndex ?? 1) + 1)}
-              disabled={getState().pagination.pageIndex === getPageCount() - 1}
+              className="h-8 w-8"
+              onClick={() => setPageIndex(Math.max(0, getState().pagination.pageIndex - 1))}
+              disabled={getState().pagination.pageIndex === 0}
             >
-              <ChevronRight className="h-3.5 w-3.5" />
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            
+            <span className="px-3 py-1 rounded border bg-background font-medium text-sm">
+              {getState().pagination.pageIndex + 1} / {Math.max(1, getPageCount())}
+            </span>
+
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setPageIndex(Math.min(getPageCount() - 1, getState().pagination.pageIndex + 1))}
+              disabled={getState().pagination.pageIndex >= getPageCount() - 1}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setPageIndex(getPageCount() - 1)}
+              disabled={getState().pagination.pageIndex >= getPageCount() - 1}
+            >
+              <ChevronsRight className="h-4 w-4" />
             </Button>
           </div>
         </div>

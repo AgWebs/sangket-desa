@@ -217,7 +217,7 @@ export default function CreateKepalaKeluargaPage() {
           </CardHeader>
           <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="no_kk" className="mb-2 block">
+              <Label htmlFor="no_kk" className="mb-4 block">
                 No. KK <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -229,7 +229,7 @@ export default function CreateKepalaKeluargaPage() {
               <FieldError message={errors.no_kk?.message} />
             </div>
             <div>
-              <Label htmlFor="nik" className="mb-2 block">
+              <Label htmlFor="nik" className="mb-4 block">
                 NIK <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -254,7 +254,7 @@ export default function CreateKepalaKeluargaPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="nama_lengkap" className="mb-2 block">
+              <Label htmlFor="nama_lengkap" className="mb-4 block">
                 Nama Lengkap <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -267,7 +267,7 @@ export default function CreateKepalaKeluargaPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="tempat_lahir" className="mb-2 block">
+                <Label htmlFor="tempat_lahir" className="mb-4 block">
                   Tempat Lahir <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -278,7 +278,7 @@ export default function CreateKepalaKeluargaPage() {
                 <FieldError message={errors.tempat_lahir?.message} />
               </div>
               <div>
-                <Label htmlFor="tanggal_lahir" className="mb-2 block">
+                <Label htmlFor="tanggal_lahir" className="mb-4 block">
                   Tanggal Lahir <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -292,7 +292,7 @@ export default function CreateKepalaKeluargaPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="jenis_kelamin" className="mb-2 block">
+                <Label htmlFor="jenis_kelamin" className="mb-4 block">
                   Jenis Kelamin <span className="text-destructive">*</span>
                 </Label>
                 <Controller
@@ -313,7 +313,7 @@ export default function CreateKepalaKeluargaPage() {
                 <FieldError message={errors.jenis_kelamin?.message} />
               </div>
               <div>
-                <Label htmlFor="agama" className="mb-2 block">
+                <Label htmlFor="agama" className="mb-4 block">
                   Agama <span className="text-destructive">*</span>
                 </Label>
                 <Controller
@@ -340,7 +340,7 @@ export default function CreateKepalaKeluargaPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="pendidikan" className="mb-2 block">
+                <Label htmlFor="pendidikan" className="mb-4 block">
                   Pendidikan Terakhir <span className="text-destructive">*</span>
                 </Label>
                 <Controller
@@ -364,7 +364,7 @@ export default function CreateKepalaKeluargaPage() {
                 <FieldError message={errors.pendidikan?.message} />
               </div>
               <div>
-                <Label htmlFor="pekerjaan" className="mb-2 block">
+                <Label htmlFor="pekerjaan" className="mb-4 block">
                   Pekerjaan <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -377,7 +377,7 @@ export default function CreateKepalaKeluargaPage() {
             </div>
 
             <div>
-              <Label htmlFor="status_perkawinan" className="mb-2 block">
+              <Label htmlFor="status_perkawinan" className="mb-4 block">
                 Status Perkawinan <span className="text-destructive">*</span>
               </Label>
               <Controller
@@ -414,7 +414,7 @@ export default function CreateKepalaKeluargaPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="alamat" className="mb-2 block">
+              <Label htmlFor="alamat" className="mb-4 block">
                 Alamat Lengkap <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -427,7 +427,7 @@ export default function CreateKepalaKeluargaPage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div>
-                <Label htmlFor="rt" className="mb-2 block">
+                <Label htmlFor="rt" className="mb-4 block">
                   RT <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -439,7 +439,7 @@ export default function CreateKepalaKeluargaPage() {
                 <FieldError message={errors.rt?.message} />
               </div>
               <div>
-                <Label htmlFor="rw">
+                <Label htmlFor="rw" className="mb-4 block">
                   RW <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -451,7 +451,7 @@ export default function CreateKepalaKeluargaPage() {
                 <FieldError message={errors.rw?.message} />
               </div>
               <div className="col-span-2">
-                <Label htmlFor="dusun" className="mb-2 block">
+                <Label htmlFor="dusun" className="mb-4 block">
                   Dusun / Banjar <span className="text-destructive">*</span>
                 </Label>
                 <Controller
@@ -478,7 +478,7 @@ export default function CreateKepalaKeluargaPage() {
 
             {/* Peta Leaflet */}
             <div>
-              <Label className="mb-2 block">
+              <Label className="mb-4 block">
                 Titik Lokasi Rumah{" "}
                 <span className="text-muted-foreground font-normal">
                   (opsional — klik pada peta)

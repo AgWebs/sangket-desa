@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@refinedev/core";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -20,7 +20,8 @@ import {
   ImageIcon,
   CheckCircle2, 
   AlertTriangle,
-  XCircle, 
+  XCircle,
+  Trash2, 
 } from "lucide-react";
 
 type FasilitasPublik = {
@@ -65,6 +66,8 @@ function KondisiBadge({ kondisi }: { kondisi: FasilitasPublik["kondisi"] }) {
 const MapView = dynamic(() => import("@/components/map-view"), { ssr: false });
 
 export default function FasilitasPublikShowPage() {
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const params = useParams();
   const id = Number(params.id);
   const { list, edit } = useNavigation();
@@ -93,10 +96,24 @@ export default function FasilitasPublikShowPage() {
             <p className="text-muted-foreground text-sm mt-0.5">Detail Fasilitas Publik</p>
           </div>
         </div>
-        <Button onClick={() => edit("fasilitas-publik", id)} className="gap-2">
-          <Pencil className="h-4 w-4" />
-          Edit
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            size="sm"
+            variant="outline" 
+            onClick={() => edit("fasilitas-publik", id)} >
+            <Pencil 
+            className="mr-1.5 h-3.5 w-3.5" />
+            Edit
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setDeleteDialogOpen(true)}
+          >
+            <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+            Hapus
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
