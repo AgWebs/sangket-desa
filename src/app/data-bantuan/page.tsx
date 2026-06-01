@@ -170,12 +170,11 @@ export default function DataBantuanListPage() {
       </div>
 
       {/* Table */}
-      <Card>
-        <CardContent className="p-0">
-          <Table>
+      <div className="rounded-lg border bg-card overflow-hidden">
+        <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-10 pl-4">#</TableHead>
+              <TableRow className="bg-muted/50">
+                <TableHead className="w-12 text-center">No.</TableHead>
                 <TableHead>Kode</TableHead>
                 <TableHead>Nama Program Bantuan</TableHead>
                 <TableHead>Sumber Dana</TableHead>
@@ -269,8 +268,7 @@ export default function DataBantuanListPage() {
               )}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
+      </div>
 
       {/* Pagination */}
       <div className="flex items-center justify-between text-sm text-muted-foreground">

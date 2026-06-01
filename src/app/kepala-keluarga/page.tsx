@@ -147,13 +147,8 @@ export default function KepalaKeluargaListPage() {
 
   const { 
   tableQuery, 
-  table: { 
-    getState, 
-    setPageIndex, 
-    getPageCount, 
-    setPageSize 
-  } 
-} = useTable({
+  table 
+  } = useTable({
     resource: "kepala-keluarga",
     filters: {
       permanent: [
@@ -174,6 +169,18 @@ export default function KepalaKeluargaListPage() {
       ],
     },
   }) as any;
+
+  const {
+    getState,
+    setPageIndex,
+    setPageSize,
+    getPageCount,
+  } = table ?? {
+    getState: () => ({ pagination: { pageIndex: 0, pageSize: 10 } }),
+    setPageIndex: () => {},
+    getPageCount: () => 0,
+    setPageSize: () => {}
+  }
 
   const columns = useMemo<ColumnDef<KepalaKeluarga>[]>(() => [
     {
@@ -285,7 +292,7 @@ export default function KepalaKeluargaListPage() {
 
   
 
-  const table = useReactTable({
+  const tableInstance = useReactTable({
     data: DUMMY_DATA, 
     columns,
     getCoreRowModel: getCoreRowModel(), 
@@ -450,7 +457,7 @@ export default function KepalaKeluargaListPage() {
       <div className="border rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((hg) => (
+            {tableInstance.getHeaderGroups().map((hg) => (
               <TableRow key={hg.id} className="bg-muted/50 hover:bg-muted/50">
                 {hg.headers.map((header) => (
                   <TableHead key={header.id} className="text-xs font-medium">
@@ -467,14 +474,14 @@ export default function KepalaKeluargaListPage() {
                   Memuat data...
                 </TableCell>
               </TableRow>
-            ) : table.getRowModel().rows.length === 0 ? (
+            ) : tableInstance.getRowModel().rows.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className="text-center py-10 text-muted-foreground text-sm">
                   Tidak ada data ditemukan
                 </TableCell>
               </TableRow>
             ) : (
-              table.getRowModel().rows.map((row) => (
+              tableInstance.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-sm">
